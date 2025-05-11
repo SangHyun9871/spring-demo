@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="
+    http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/mvc 
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd
+    ">
+
+    <aop:aspectj-autoproxy/> <!-- AOP 지원 (@AspectJ, @Around, @Before, @After, @AfterReturning, @AfterThrowing 지원) --> 
+    <context:load-time-weaver/> <!-- 스케줄링 및 비동기 지원 (@Scheduled, @Async) -->
+    <context:annotation-config/> <!-- Bean 주입 지원 (@Autowired, @Resource, @PostConstruct, @PreDestroy, @Value) -->
+    <context:property-placeholder location="classpath:global-${spring.profiles.active}.properties" fileEncoding="UTF-8"/> <!-- @Value("${property.key}") 또는 ${property.key} 사용 -->
+    
+    <!-- Service, Repository등 트랜잭션 관리가 필요한 Bean은 context-*.xml에서 트랜잭션 설정과 함께 scan 하기위해 dispatcher-servlet.xml에서 제외 -->
+    <context:component-scan base-package="core,smartplus">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+    </context:component-scan>
+    
+    <mvc:annotation-driven/> <!-- RESTful 지원 (@ControllerAdvice, @InitBinder, @ModelAttribute, @RequestBody, @ResponseBody, @ResponseStatus) -->
+
+    <mvc:resources mapping="/static/**" location="/static/"/> <!-- 정적 리소스 매핑 -->
+    <mvc:resources mapping="/favicon.ico" location="/static/favicon.ico"/> <!-- 파비콘 매핑 -->
+
+    <!-- 정적 리소스의 캐시 비활성 설정(개발시에만) -->
+    <beans profile="local">
+        <mvc:interceptors>
+            <mvc:interceptor>
+                <mvc:mapping path="/static/**"/>
+                <mvc:mapping path="/favicon.ico"/>
+                <bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+                    <property name="cacheSeconds" value="0"/>
+                    <property name="useExpiresHeader" value="true"/>
+                    <property name="useCacheControlHeader" value="true"/>
+                    <property name="useCacheControlNoStore" value="true"/>
+                </bean>
+            </mvc:interceptor>
+        </mvc:interceptors>
+    </beans>
+
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0" />
+    
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="1">
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- 
+        JSON View는 @ResponseBody로 처리
+
+        Spring 3.1 부터 - HttpMessageConverter 목록에 MappingJackson2HttpMessageConverter가 포함되어
+        @ResponseBody를 사용하면 JSON으로 변환되어 응답됨
+
+        ex) 
+        @GetMapping("/data")
+        @ResponseBody
+        public Map<String, Object> getData() {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("key", "value");
+            return map;
+        }
+    -->
+</beans>

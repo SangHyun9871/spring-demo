@@ -1,0 +1,49 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
+         version="3.0">
+
+    <display-name>Spring Demo Application</display-name>
+
+    <!-- 
+        profile 설정
+        - local : local 환경
+        - dev : 개발 환경
+        - prod : 운영 환경
+
+        환경변수 spring.profiles.active 설정이 없으면
+        local profile이 기본으로 설정됩니다.
+    -->
+    <context-param>
+        <param-name>spring.profiles.active</param-name>
+        <param-value>${spring.profiles.active:local}</param-value>
+    </context-param>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath*:config/spring/context-*.xml</param-value>
+		</init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/config/spring/dispatcher-servlet.xml</param-value>
+    </context-param>
+
+    <listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+</web-app>

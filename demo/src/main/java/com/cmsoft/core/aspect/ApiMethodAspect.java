@@ -1,8 +1,6 @@
 package com.cmsoft.core.aspect;
 
 import java.util.List;
-import java.util.Map;
-
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -47,13 +45,9 @@ public class ApiMethodAspect {
                     result = new RestResponse<>(result);
                     RestResponse<?> restResponse = (RestResponse<?>) result;
                     restResponse.setExecutionTimeSeconds((System.currentTimeMillis() - startTime) / 1000);
-                    restResponse.addMetadata("timestamp", System.currentTimeMillis());
+                    restResponse.addMetadata("timestamp", new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date()));
                     if(result instanceof List) {
                         restResponse.addMetadata("totalCount", ((List<?>) result).size());
-                    }else if(result instanceof Map) {
-                        restResponse.addMetadata("totalCount", ((Map<?, ?>) result).keySet().size()==0 ? 0 : 1);
-                    }else {
-                        restResponse.addMetadata("totalCount", 1);
                     }
                 }
             }

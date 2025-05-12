@@ -16,19 +16,22 @@
     http://www.springframework.org/schema/aop/spring-aop.xsd
     http://www.springframework.org/schema/tx
     http://www.springframework.org/schema/tx/spring-tx.xsd
-    ">
+    "
+    profile="local">
 
-    <!-- component-scan -->
-    <context:component-scan base-package="com.cmsoft">
-        <context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
-        <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
-        <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
-    </context:component-scan>
 
-    <mvc:resources mapping="/static/**" location="/static/"/> <!-- 정적 리소스 매핑 -->
-    <mvc:resources mapping="/favicon.ico" location="/static/favicon.ico"/> <!-- 파비콘 매핑 -->
-
-    <!-- AOP 활성화 -->
-    <aop:aspectj-autoproxy />
-
+    <!-- 정적 리소스의 캐시 비활성 설정(개발시에만) -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/static/**"/>
+            <mvc:mapping path="/favicon.ico"/>
+            <bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+                <property name="cacheSeconds" value="0"/>
+                <property name="cacheControl">
+                    <bean class="org.springframework.http.CacheControl" factory-method="noStore"/>
+                </property>
+            </bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    
 </beans>

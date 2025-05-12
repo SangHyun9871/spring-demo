@@ -16,34 +16,35 @@
     -->
     <context-param>
         <param-name>spring.profiles.active</param-name>
-        <param-value>${spring.profiles.active:local}</param-value>
+        <param-value>local</param-value>
     </context-param>
 
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
-    <servlet>
-        <servlet-name>dispatcher</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-		<init-param>
-			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath*:config/spring/context-*.xml</param-value>
-		</init-param>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>dispatcher</servlet-name>
-        <url-pattern>*.do</url-pattern>
-    </servlet-mapping>
-
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/config/spring/dispatcher-servlet.xml</param-value>
+        <param-value>classpath:config/spring/dispatcher-servlet.xml</param-value>
     </context-param>
 
     <listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+    
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath*:config/spring/context-*.xml</param-value>
+		</init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
 </web-app>

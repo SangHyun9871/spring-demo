@@ -28,7 +28,4 @@
     <mvc:resources mapping="/static/**" location="/static/"/> <!-- 정적 리소스 매핑 -->
     <mvc:resources mapping="/favicon.ico" location="/static/favicon.ico"/> <!-- 파비콘 매핑 -->
 
-    <!-- AOP 활성화 -->
-    <aop:aspectj-autoproxy />
-
 </beans>

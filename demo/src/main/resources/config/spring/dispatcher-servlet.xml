@@ -17,7 +17,6 @@
     ">
 
     <aop:aspectj-autoproxy proxy-target-class="true"/> <!-- AOP 지원 (@AspectJ, @Around, @Before, @After, @AfterReturning, @AfterThrowing 지원) --> 
-    <!-- <context:load-time-weaver/> --> <!-- 스케줄링 및 비동기 지원 (@Scheduled, @Async) -->
     <context:annotation-config/> <!-- Bean 주입 지원 (@Autowired, @Resource, @PostConstruct, @PreDestroy, @Value) -->
     <context:property-placeholder location="classpath:config/properties/global-${spring.profiles.active}.properties" /> <!-- @Value("${property.key}") 또는 ${property.key} 사용 -->
     

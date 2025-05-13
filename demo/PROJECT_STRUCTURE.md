@@ -33,9 +33,10 @@ spring-demo/
 │   │   │   │       └── sample/
 │   │   │   ├── resources/
 │   │   │   │   ├── config/
-│   │   │   │   │   ├── mybatis/
 │   │   │   │   │   ├── properties/
 │   │   │   │   │   └── spring/
+│   │   │   │   │       ├── context-*.xml
+│   │   │   │   │       └── dispatcher-servlet.xml
 │   │   │   │   └── sql/
 │   │   │   │       ├── config/
 │   │   │   │       │   └── mybatis-config.xml

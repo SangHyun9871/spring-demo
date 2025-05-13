@@ -41,4 +41,12 @@ public class SampleApiControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
+    
+    @Test
+    public void A004() throws Exception {
+		mockMvc.perform(get("/sample/A004?test=123"))
+				.andExpect(status().isOk())
+				.andExpect(view().name("test"));
+	}
+    
 }

@@ -30,11 +30,11 @@ public class SampleController {
         map2.put("profile", testValue);
         list.add(map2);
         
-        return list;
+        return list; // @ResponseBody -> json
     }
 
     @RequestMapping("/test")
     public String test() {
-        return "test";
+        return "test"; // views/test.jsp
     }
 }

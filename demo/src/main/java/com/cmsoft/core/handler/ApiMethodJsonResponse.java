@@ -24,7 +24,6 @@ import com.cmsoft.core.annotation.ApiResponseType;
 /**
  * ApiMethod 어노테이션의 REST,JSON 타입에 대해 강제로 json return으로 처리하는 핸들러
  */
-@SuppressWarnings({"null", "unchecked"})
 public class ApiMethodJsonResponse implements HandlerMethodReturnValueHandler {
     public static final List<ApiResponseType> VIEW_TYPES = Arrays.asList(ApiResponseType.REST, ApiResponseType.JSON);
 
@@ -60,7 +59,8 @@ public class ApiMethodJsonResponse implements HandlerMethodReturnValueHandler {
         writeWithMessageConverters(returnValue, returnType, inputMessage, outputMessage);
     }
 
-    private void writeWithMessageConverters(Object returnValue, MethodParameter returnType,
+    @SuppressWarnings("unchecked")
+	private void writeWithMessageConverters(Object returnValue, MethodParameter returnType,
             ServletServerHttpRequest inputMessage, ServletServerHttpResponse outputMessage)
             throws IOException, HttpMediaTypeNotAcceptableException {
         

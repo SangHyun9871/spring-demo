@@ -27,7 +27,11 @@
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
     </context:component-scan>
-    
+
+    <!-- ApiController request uri 등록 ~/service/A001 ... -->
+    <bean class="com.cmsoft.core.handler.ApiRequestMappingHandler"/>
+
+    <!-- apiMethod 중 type이 REST, JSON인 경우 jsonResponse로 변환 -->
     <mvc:annotation-driven>
         <mvc:return-value-handlers>
             <bean class="com.cmsoft.core.handler.ApiMethodJsonResponse">
@@ -39,9 +43,6 @@
             </bean>
         </mvc:return-value-handlers>
     </mvc:annotation-driven>
-
-    <!-- ApiMethod Handler Mapping -->
-    <bean class="com.cmsoft.core.handler.ApiRequestMappingHandler"/>
 
     <mvc:resources mapping="/static/**" location="/static/"/>
     <mvc:resources mapping="/favicon.ico" location="/static/favicon.ico"/>

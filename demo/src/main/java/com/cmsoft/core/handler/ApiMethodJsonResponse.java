@@ -18,15 +18,15 @@ import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import com.cmsoft.core.annotation.ApiMethod;
-import com.cmsoft.core.annotation.ApiType;
+import com.cmsoft.core.annotation.ApiResponseType;
 
 
 /**
- * ApiMethod 어노테이션의 REST,JSON 타입에 대해 @ResponseBody를 자동으로 적용하는 핸들러
+ * ApiMethod 어노테이션의 REST,JSON 타입에 대해 강제로 json return으로 처리하는 핸들러
  */
 @SuppressWarnings({"null", "unchecked"})
 public class ApiMethodJsonResponse implements HandlerMethodReturnValueHandler {
-    public static final List<ApiType> VIEW_TYPES = Arrays.asList(ApiType.REST, ApiType.JSON);
+    public static final List<ApiResponseType> VIEW_TYPES = Arrays.asList(ApiResponseType.REST, ApiResponseType.JSON);
 
     private final HttpMessageConverter<?>[] messageConverters;
 

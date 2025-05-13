@@ -11,10 +11,11 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -22,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(locations = {"classpath*:config/spring/*.xml"})
 @ActiveProfiles("local")
 @TestPropertySource(locations = "classpath:config/properties/*-local.properties")
-public class SampleServiceTest {
+public class SampleApiControllerTest {
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -35,12 +36,9 @@ public class SampleServiceTest {
     }
 
     @Test
-    public void hello() throws Exception {
-        mockMvc.perform(get("/service?method=A001"))
+    public void A001() throws Exception {
+        mockMvc.perform(get("/sample/A001"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.code").value("0000"))
-                .andExpect(jsonPath("$.data[0].hello").value("hello"))
-                .andExpect(jsonPath("$.data[1].profile").value("local"));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 }

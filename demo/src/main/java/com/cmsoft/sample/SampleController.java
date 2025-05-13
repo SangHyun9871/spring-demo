@@ -17,11 +17,6 @@ public class SampleController {
     @Value("${test.value}")
     private String testValue;
 
-    @RequestMapping("/")
-    public String index() {
-        return "index";
-    }
-    
     @RequestMapping("/hello")
     @ResponseBody
     public Object hello() {

@@ -15,7 +15,7 @@ import com.cmsoft.core.annotation.ApiController;
 /**
  * ApiMethod 어노테이션이 있는 메소드를 requestMapping 정보를 생성하여 등록하는 핸들러
  */
-public class ApiControllerRequestMapping extends RequestMappingHandlerMapping {
+public class ApiRequestMappingHandler extends RequestMappingHandlerMapping {
     
     private final Map<String, Method> methodMap = new HashMap<>();
     

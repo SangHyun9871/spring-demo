@@ -41,7 +41,7 @@
     </mvc:annotation-driven>
 
     <!-- ApiMethod Handler Mapping -->
-    <bean class="com.cmsoft.core.handler.ApiControllerRequestMapping"/>
+    <bean class="com.cmsoft.core.handler.ApiRequestMappingHandler"/>
 
     <mvc:resources mapping="/static/**" location="/static/"/>
     <mvc:resources mapping="/favicon.ico" location="/static/favicon.ico"/>

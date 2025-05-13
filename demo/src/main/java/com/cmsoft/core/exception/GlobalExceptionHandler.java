@@ -14,25 +14,31 @@ public class GlobalExceptionHandler {
     
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleException(Exception e) {
-        logger.error("Unexpected error occurred", e);
         Throwable cause = e.getCause();
         if(cause == null) {
             cause = e;
         }
 
         if(e instanceof org.springframework.web.servlet.NoHandlerFoundException) {
+            logger.debug("Unexpected error occurred", e);
             return new ResponseEntity<>(new ErrorResponse("404","요청하신 페이지를 찾을 수 없습니다.", cause.getMessage()), HttpStatus.NOT_FOUND);
         } else if(e instanceof org.springframework.web.HttpRequestMethodNotSupportedException) {
+            logger.debug("Unexpected error occurred", e);
             return new ResponseEntity<>(new ErrorResponse("405","지원하지 않는 HTTP 메소드입니다.", cause.getMessage()), HttpStatus.METHOD_NOT_ALLOWED);
         } else if(e instanceof org.springframework.web.bind.MissingServletRequestParameterException) {
+            logger.debug("Unexpected error occurred", e);
             return new ResponseEntity<>(new ErrorResponse("400","필수 파라미터가 누락되었습니다.", cause.getMessage()), HttpStatus.BAD_REQUEST);
         } else if(e instanceof org.springframework.web.bind.MissingPathVariableException) {
+            logger.debug("Unexpected error occurred", e);
             return new ResponseEntity<>(new ErrorResponse("400","필수 PathVariable이 누락되었습니다.", cause.getMessage()), HttpStatus.BAD_REQUEST);
         } else if(e instanceof org.springframework.web.bind.MissingRequestHeaderException) {
+            logger.debug("Unexpected error occurred", e);
             return new ResponseEntity<>(new ErrorResponse("400","필수 Header가 누락되었습니다.", cause.getMessage()), HttpStatus.BAD_REQUEST);
         } else if(e instanceof org.springframework.web.bind.MethodArgumentNotValidException) {
+            logger.debug("Unexpected error occurred", e);
             return new ResponseEntity<>(new ErrorResponse("400","잘못된 요청입니다.", cause.getMessage()), HttpStatus.BAD_REQUEST);
         } else {
+            logger.error("Unexpected error occurred", e);
             return new ResponseEntity<>(new ErrorResponse("500","서버 오류가 발생했습니다.", cause.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

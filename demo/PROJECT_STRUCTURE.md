@@ -11,9 +11,8 @@
 ---
 
 ## 프로젝트 개요
-- Spring MVC 기반 웹 애플리케이션
+- Spring MVC 기반 웹 애플리케이션 (Spring Boot 사용하지 않음)
 - XML 기반 설정
-- Spring Boot 사용하지 않음
 - MyBatis를 사용한 데이터베이스 연동
 - 환경별 설정 (local, dev, prod) 지원
 
@@ -28,19 +27,28 @@ spring-demo/
 │   │   ├── main/
 │   │   │   ├── java/
 │   │   │   │   └── com/cmsoft/
+│   │   │   │       ├── core/
+│   │   │   │       │   ├── annotation/
+│   │   │   │       │   └── handler/
+│   │   │   │       └── sample/
 │   │   │   ├── resources/
 │   │   │   │   ├── config/
 │   │   │   │   │   ├── mybatis/
 │   │   │   │   │   ├── properties/
 │   │   │   │   │   └── spring/
-│   │   │   │   ├── sql/sqlmaps/
+│   │   │   │   └── sql/
+│   │   │   │       ├── config/
+│   │   │   │       │   └── mybatis-config.xml
+│   │   │   │       └── sqlmaps/
 │   │   │   └── webapp/
 │   │   │       ├── static/
 │   │   │       └── WEB-INF/
 │   │   │           ├── web.xml
 │   │   │           └── views/
 │   │   └── test/
-│   │       ├── java/com/cmsoft/
+│   │       └── java/
+│   │           └── com/cmsoft/
+│   │               └── sample/
 ```
 
 ---
@@ -63,6 +71,30 @@ spring-demo/
   - `context-local-common.xml`: 로컬 환경 설정
   - `context-datasource.xml`: 데이터소스 설정
   - `context-transaction.xml`: 트랜잭션 설정
+- **`ApiRequestMappingHandler.java`: ApiMethod의 EndPoint 설정
+- **예제 ApiMethod 코드**:
+  ```java
+  @ApiController("/service")
+  public class SampleController{
+
+    // ~/service/hello
+    @ApiMethod(desc="sample apiMethod view", type = ApiResponseType.VIEW, mode = ApiMode.SELECT)
+    public String hello()
+    {
+      return "hello"; // hello.jsp
+    }
+
+    // ~/service/hello_json
+    @ApiMethod(desc="sample apiMethod json", type = ApiResponseType.JSON, mode = ApiMode.SELECT)
+    public Object hello_json()
+    {
+      HashMap<String,String> map = new HashMap<>();
+      map.put("test","hello");
+      return map; // {"test":"hello"}
+    }
+  }
+  ```
+
 
 ### 3. 프로파일별 설정
 - **`global-*.properties`**: 프로파일별 프로퍼티 파일

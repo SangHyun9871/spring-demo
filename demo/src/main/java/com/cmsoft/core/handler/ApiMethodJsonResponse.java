@@ -24,6 +24,7 @@ import com.cmsoft.core.annotation.ApiResponseType;
 /**
  * ApiMethod 어노테이션의 REST,JSON 타입에 대해 강제로 json return으로 처리하는 핸들러
  */
+@SuppressWarnings("null")
 public class ApiMethodJsonResponse implements HandlerMethodReturnValueHandler {
     public static final List<ApiResponseType> VIEW_TYPES = Arrays.asList(ApiResponseType.REST, ApiResponseType.JSON);
 
